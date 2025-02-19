@@ -22,6 +22,27 @@ export const JobsContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userJobs, setUserJobs] = useState([]);
 
+  const [searchQuery, setSearchQuery] = useState({
+    tags: "",
+    location: "",
+    title: "",
+  });
+
+  //filter jobs
+  const [filters, setFilters] = useState({
+    fullTime: false,
+    partTime: false,
+    internship: false,
+    fullStack: false,
+    backend: false,
+    frontend: false,
+    devOps: false,
+    uiux: false,
+  });
+
+  const [minSalary, setMinSalary] = useState(30000);
+  const [maxSalary, setMaxSalary] = useState(120000);
+
   const getJobs = async () => {
     setLoading(true);
     try {
@@ -115,6 +136,12 @@ export const JobsContextProvider = ({ children }) => {
 
   //apply to a job
   const applyToJob = async (jobId) => {
+    const job = jobs.find((job) => job.id === jobId);
+
+    if (job && job.applicants.includes(userProfile._id)) {
+      toast.error("You have already applied to this job");
+      return;
+    }
     try {
       const res = await axios.put("/api/v1/jobs/apply/" + jobId);
       toast.success("Job applied successfully");
@@ -130,12 +157,26 @@ export const JobsContextProvider = ({ children }) => {
     try {
       await axios.delete("/api/v1/jobs/" + jobId);
       setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
-      searchJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
+      setUserJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
 
       toast.success("Job deleted successfully");
     } catch (error) {
       console.log("Error deleting job", error);
     }
+  };
+
+  const handleSearchChange = (searchName, value) => {
+    setSearchQuery((prev) => ({
+      ...prev,
+      [searchName]: value,
+    }));
+  };
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [filterName]: !prev[filterName],
+    }));
   };
 
   useEffect(() => {
@@ -162,6 +203,16 @@ export const JobsContextProvider = ({ children }) => {
         likeJob,
         applyToJob,
         deleteJob,
+        handleSearchChange,
+        searchQuery,
+        setSearchQuery,
+        handleFilterChange,
+        filters,
+        setFilters,
+        minSalary,
+        setMinSalary,
+        maxSalary,
+        setMaxSalary,
       }}>
       {children}
     </JobsContext.Provider>

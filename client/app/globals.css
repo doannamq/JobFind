@@ -98,3 +98,13 @@ body {
 .custom-quill-editor .ql-editor::-webkit-scrollbar-track {
   background-color: #cbd5e0;
 }
+
+.wisiwyg {
+  line-height: 1.5;
+}
+
+.wisiwyg ol,
+.wisiwyg ul {
+  padding-left: 1.5rem;
+  @apply list-disc;
+}

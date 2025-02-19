@@ -27,7 +27,7 @@ router.put("/jobs/apply/:id", protect, applyJob);
 router.put("/jobs/like/:id", protect, likeJob);
 
 //getJobById
-router.get("/jobs/:id", protect, getJobById);
+router.get("/job/:id", protect, getJobById);
 
 //delete job
 router.delete("/jobs/:id", protect, deleteJob);

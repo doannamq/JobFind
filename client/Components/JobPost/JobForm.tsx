@@ -17,6 +17,7 @@ function JobForm() {
     skills,
     negotiable,
     tags,
+    resetJobForm,
   } = useGlobalContext();
 
   const { createJob } = useJobsContext();
@@ -77,6 +78,8 @@ function JobForm() {
       negotiable,
       tags,
     });
+
+    resetJobForm();
   };
 
   return (

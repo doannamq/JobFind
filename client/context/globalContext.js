@@ -67,6 +67,22 @@ export const GlobalContextProvider = ({ children }) => {
     setSalary(e.target.value);
   };
 
+  const resetJobForm = () => {
+    setJobTitle("");
+    setJobDescription("");
+    setSalary(0);
+    setActiveEmploymentTypes([]);
+    setSalaryType("Year");
+    setNegotiable(false);
+    setTags([]);
+    setSkills([]);
+    setLocation({
+      country: "",
+      city: "",
+      address: "",
+    });
+  };
+
   useEffect(() => {
     if (isAuthenticated && auth0User) {
       getUserProfile(auth0User.sub);
@@ -99,6 +115,7 @@ export const GlobalContextProvider = ({ children }) => {
         setTags,
         setSkills,
         setLocation,
+        resetJobForm,
       }}>
       {children}
     </GlobalContext.Provider>

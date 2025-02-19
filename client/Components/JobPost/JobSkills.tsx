@@ -106,12 +106,11 @@ function JobSkills() {
             {tags.map((tag: string, index: number) => (
               <div
                 key={index}
-                className="bg-primary rounded-full text-primary-foreground px-3 py-1 flex items-center space-x-1">
+                className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full flex items-center space-x-1">
                 <span>{tag}</span>
                 <button
-                  type="button"
                   onClick={() => handleRemoveTag(tag)}
-                  className="text-primary-foreground hover:text-red-500 focus:outline-none"
+                  className="text-secondary-foreground hover:text-red-500 focus:outline-none"
                   aria-label={`Remove tag ${tag}`}>
                   <X size={14} />
                 </button>
